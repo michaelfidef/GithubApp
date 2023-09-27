@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Github App</string>
+    <string name="searchbar_hint">Cari nama User</string>
+    <string name="tv_username">username</string>
+    <string name="tv_name">name</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <!--    <string name="hello_blank_fragment">Hello blank fragment</string>-->
+    <string name="tab_text_1">Followers</string>
+    <string name="tab_text_2">Following</string>
+    <string name="text_ntardihapus">Hallo Followers</string>
+    <string name="following_testHapus">halo following!!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="jumlah_following">Following</string>
+    <string name="jumlah_followers">Followers</string>
+    <string name="testUsername">Halo</string>
+</resources>
