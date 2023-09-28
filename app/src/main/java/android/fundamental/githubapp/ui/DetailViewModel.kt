@@ -1,11 +1,15 @@
 package android.fundamental.githubapp.ui
 
+import android.fundamental.githubapp.data.datastore.SettingPreferences
 import android.fundamental.githubapp.data.response.DetailUserResponse
 import android.fundamental.githubapp.data.retrofit.ApiConfig
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

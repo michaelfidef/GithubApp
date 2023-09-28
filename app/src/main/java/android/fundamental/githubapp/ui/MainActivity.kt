@@ -1,6 +1,10 @@
 package android.fundamental.githubapp.ui
 
+import android.content.Intent
+import android.fundamental.githubapp.R
 import android.fundamental.githubapp.data.adapter.UserAdapter
+import android.fundamental.githubapp.data.datastore.SettingPreferences
+import android.fundamental.githubapp.data.datastore.dataStore
 import android.fundamental.githubapp.data.response.ItemsItem
 import android.fundamental.githubapp.data.response.UserResponse
 import android.fundamental.githubapp.data.retrofit.ApiConfig
@@ -8,8 +12,11 @@ import android.fundamental.githubapp.databinding.ActivityMainBinding
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import retrofit2.Call
@@ -26,6 +33,19 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
+        val pref = SettingPreferences.getInstance(application.dataStore)
+        val main = ViewModelProvider(this, ViewModelFactory(pref)).get(
+            SettingViewModel::class.java
+        )
+
+        main.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
+            if (isDarkModeActive) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+        }
+
         val layoutManager = LinearLayoutManager(this)
         binding.rvUser.layoutManager = layoutManager
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
@@ -33,6 +53,22 @@ class MainActivity : AppCompatActivity() {
 
         with(binding) {
             searchView.setupWithSearchBar(searchBar)
+            searchBar.inflateMenu(R.menu.about)
+            searchBar.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.favorite_page -> {
+                        val fav = Intent(this@MainActivity, FavoriteActivity::class.java)
+                        startActivity(fav)
+                        true
+                    }
+                    R.id.seting_page -> {
+                        val settings = Intent(this@MainActivity, SettingActivity::class.java)
+                        startActivity(settings)
+                        true
+                    }
+                    else -> false
+                }
+            }
             searchView
                 .editText
                 .setOnEditorActionListener { _, _, _ ->
@@ -47,7 +83,6 @@ class MainActivity : AppCompatActivity() {
         }
         getUser()
     }
-
         private fun getUser(){
             showLoading(true)
             val client = ApiConfig.getApiConfig().searchGitHubUser(GITHUB)
