@@ -15,24 +15,26 @@
         android:theme="@style/Theme.GithubApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.SettingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.FavoriteActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.DetailUserActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.MainActivity"
-            android:configChanges="orientation|screenSize"
-            android:exported="true">
+            android:name=".ui.view.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Base.Theme.GithubApp.NoAction">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.viewmodel.SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.FavoriteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.DetailUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.MainActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package android.fundamental.githubapp.ui
+package android.fundamental.githubapp.ui.viewmodel
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,7 +18,7 @@ class SettingActivity : AppCompatActivity() {
         val switchTheme = findViewById<SwitchMaterial>(R.id.switch_theme)
 
         val pref = SettingPreferences.getInstance(application.dataStore)
-        val settingViewModel = ViewModelProvider(this, ViewModelFactory(pref)).get(
+        val settingViewModel = ViewModelProvider(this, SettingViewModelFactory(pref)).get(
             SettingViewModel::class.java
         )
 

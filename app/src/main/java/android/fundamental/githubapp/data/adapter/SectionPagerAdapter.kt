@@ -1,12 +1,13 @@
 package android.fundamental.githubapp.data.adapter
 
-import android.fundamental.githubapp.ui.FollowFragment
+import android.fundamental.githubapp.ui.view.FollowFragment
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class SectionsPagerAdapter(activity: AppCompatActivity, private var username : String) : FragmentStateAdapter(activity) {
+class SectionsPagerAdapter(activity: AppCompatActivity, private var username: String) :
+    FragmentStateAdapter(activity) {
     override fun createFragment(position: Int): Fragment {
         val fragment = FollowFragment()
         fragment.arguments = Bundle().apply {
@@ -15,7 +16,12 @@ class SectionsPagerAdapter(activity: AppCompatActivity, private var username : S
         }
         return fragment
     }
+
     override fun getItemCount(): Int {
         return 2
+    }
+
+    companion object {
+        var username = ""
     }
 }

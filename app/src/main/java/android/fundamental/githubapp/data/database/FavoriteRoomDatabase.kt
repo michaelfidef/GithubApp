@@ -14,16 +14,12 @@ abstract class FavoriteRoomDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: FavoriteRoomDatabase? = null
 
-        fun getDatabase(context: Context): FavoriteRoomDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
+        fun getInstance(context: Context): FavoriteRoomDatabase =
+            INSTANCE ?: synchronized(this) {
+                INSTANCE ?: Room.databaseBuilder(
                     context.applicationContext,
-                    FavoriteRoomDatabase::class.java,
-                    "favorite_database"
+                    FavoriteRoomDatabase::class.java, "database_github"
                 ).build()
-                INSTANCE = instance
-                instance
             }
-        }
     }
 }

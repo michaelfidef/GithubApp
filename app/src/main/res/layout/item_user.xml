@@ -12,10 +12,10 @@
     android:layout_marginBottom="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cv_move"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:id="@+id/cv_move">
+        android:padding="8dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
@@ -33,9 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_toEndOf="@+id/profile_image"
+            android:paddingStart="12dp"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:paddingStart="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

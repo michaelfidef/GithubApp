@@ -1,4 +1,4 @@
-package android.fundamental.githubapp.ui
+package android.fundamental.githubapp.ui.viewmodel
 
 import android.fundamental.githubapp.data.response.ItemsItem
 import android.fundamental.githubapp.data.retrofit.ApiConfig

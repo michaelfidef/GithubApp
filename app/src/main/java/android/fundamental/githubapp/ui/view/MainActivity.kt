@@ -1,4 +1,4 @@
-package android.fundamental.githubapp.ui
+package android.fundamental.githubapp.ui.view
 
 import android.content.Intent
 import android.fundamental.githubapp.R
@@ -9,10 +9,12 @@ import android.fundamental.githubapp.data.response.ItemsItem
 import android.fundamental.githubapp.data.response.UserResponse
 import android.fundamental.githubapp.data.retrofit.ApiConfig
 import android.fundamental.githubapp.databinding.ActivityMainBinding
+import android.fundamental.githubapp.ui.viewmodel.SettingActivity
+import android.fundamental.githubapp.ui.viewmodel.SettingViewModel
+import android.fundamental.githubapp.ui.viewmodel.SettingViewModelFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         val pref = SettingPreferences.getInstance(application.dataStore)
-        val main = ViewModelProvider(this, ViewModelFactory(pref)).get(
+        val main = ViewModelProvider(this, SettingViewModelFactory(pref)).get(
             SettingViewModel::class.java
         )
 
@@ -54,21 +56,6 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             searchView.setupWithSearchBar(searchBar)
             searchBar.inflateMenu(R.menu.about)
-            searchBar.setOnMenuItemClickListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.favorite_page -> {
-                        val fav = Intent(this@MainActivity, FavoriteActivity::class.java)
-                        startActivity(fav)
-                        true
-                    }
-                    R.id.seting_page -> {
-                        val settings = Intent(this@MainActivity, SettingActivity::class.java)
-                        startActivity(settings)
-                        true
-                    }
-                    else -> false
-                }
-            }
             searchView
                 .editText
                 .setOnEditorActionListener { _, _, _ ->
@@ -81,51 +68,72 @@ class MainActivity : AppCompatActivity() {
                     false
                 }
         }
+
+        binding.searchBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.favorite_page -> {
+                    val fav = Intent(this@MainActivity, FavoriteActivity::class.java)
+                    startActivity(fav)
+                    true
+                }
+
+                R.id.seting_page -> {
+                    val settings = Intent(this@MainActivity, SettingActivity::class.java)
+                    startActivity(settings)
+                    true
+                }
+
+                else -> false
+            }
+        }
         getUser()
     }
-        private fun getUser(){
-            showLoading(true)
-            val client = ApiConfig.getApiConfig().searchGitHubUser(GITHUB)
-            client.enqueue(object : Callback<UserResponse>{
-                override fun onResponse(
-                    call: Call<UserResponse>,
-                    response: Response<UserResponse>
-                ){
-                    showLoading(false)
-                    if (response.isSuccessful){
-                        val responseBody = response.body()
-                        if (responseBody != null){
-                            setAccountUser(responseBody.items)
-                        }
-                    }else{
-                        Log.e(TAG, "onFailure: ${response.message()}" )
-                    }
-                }
-                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                Log.e("TAG", "onFailure: ${t.message}")
-                }
-            })
-        }
 
-    private fun getSearchUser(q : String){
+    private fun getUser() {
         showLoading(true)
-        val client = ApiConfig.getApiConfig().searchGitHubUser(q)
-        client.enqueue(object : Callback<UserResponse>{
+        val client = ApiConfig.getApiConfig().searchGitHubUser(GITHUB)
+        client.enqueue(object : Callback<UserResponse> {
             override fun onResponse(
                 call: Call<UserResponse>,
                 response: Response<UserResponse>
-            ){
+            ) {
                 showLoading(false)
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     val responseBody = response.body()
-                    if (responseBody != null){
+                    if (responseBody != null) {
+                        setAccountUser(responseBody.items)
+                    }
+                } else {
+                    Log.e(TAG, "onFailure: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                Log.e("TAG", "onFailure: ${t.message}")
+            }
+        })
+    }
+
+    private fun getSearchUser(q: String) {
+        showLoading(true)
+        val client = ApiConfig.getApiConfig().searchGitHubUser(q)
+        client.enqueue(object : Callback<UserResponse> {
+            override fun onResponse(
+                call: Call<UserResponse>,
+                response: Response<UserResponse>
+            ) {
+                showLoading(false)
+                if (response.isSuccessful) {
+                    val responseBody = response.body()
+                    if (responseBody != null) {
                         setAccountUser(responseBody.items)
                         Log.d(TAG, "onResponse: ")
                     }
-                }else{
-                    Log.e(TAG, "onFailure: ${response.message()}" )
+                } else {
+                    Log.e(TAG, "onFailure: ${response.message()}")
                 }
             }
+
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 Log.e("TAG", "onFailure: ${t.message}")
             }
@@ -139,11 +147,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        if (isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
-        } else {
-            binding.progressBar.visibility = View.GONE
-        }
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

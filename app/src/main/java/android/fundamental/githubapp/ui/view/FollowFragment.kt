@@ -1,13 +1,13 @@
-package android.fundamental.githubapp.ui
+package android.fundamental.githubapp.ui.view
 
 import android.fundamental.githubapp.data.adapter.UserAdapter
 import android.fundamental.githubapp.data.response.ItemsItem
 import android.fundamental.githubapp.databinding.FragmentFollowBinding
+import android.fundamental.githubapp.ui.viewmodel.FollowViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
