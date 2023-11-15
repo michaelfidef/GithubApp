@@ -30,6 +30,19 @@
       - List following
       - List follower
 
+**4. Favorite User dengan Database**
+
+      - Aplikasi harus bisa menambah dan menghapus user dari daftar favorite.
+      - Aplikasi harus mempunyai halaman yang menampilkan daftar favorite.
+      - Menampilkan halaman detail dari daftar favorite.
+
+**5. Pengaturan Tema**
+
+      - Membuat menu untuk mengganti tema (light theme atau dark theme) dengan menggunakan penyimpanan key-value.
+      - Pastikan tema tetap terimplementasi walaupun aplikasi ditutup dan dibuka kembali.
+         - Caranya yaitu dengan meng-observe data dan mengimplementasikan tema pada halaman pertama.
+      - Pastikan setiap komponen dan indikator tetap terlihat jelas ketika berubah tema (Jangan ketika tema gelap, teks dan indikator juga berwarna hitam)
+
 # Penilaian:
 **1. Menerapkan tampilan aplikasi yang sesuai standar:**
 
@@ -54,3 +67,7 @@
 **5. Menerapkan Android Architecture Component (minimal ViewModel dan LiveData) dengan benar.**
 
       - Tidak membuat satu ViewModel untuk beberapa view sekaligus, tetapi dipisah.
+      
+**6. Menggunakan DataStore untuk penyimpanan pengaturan.**
+
+**7. Menambahkan testing (unit test data ui test) minimal satu test case.**
